@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path');
 const fs = require('fs')
+const { v4: uuidv4 } = require('uuid')
+let database = require('./db/db.json')
 
 const app = express()
 
@@ -19,9 +21,14 @@ app.get('/api/notes', (req, res) => fs.readFile(path.join(__dirname, '/db/db.jso
 }))
 
 app.post('/api/notes', (req, res) => {
+  req.body.id = uuidv4()
   const newNote = req.body
+
+  database.push(newNote)
   console.log(newNote)
-  res.json(newNote)
+  
+  fs.writeFileSync('./db/db.json', JSON.stringify(database))
+  res.json(database)
 })
 
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
