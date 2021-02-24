@@ -4,7 +4,7 @@ This app is a modification of starter code given by the UNC Bootcamp. It creates
 
 Like to working Application
 
-(Note Taking App)[https://note-taker-cp.herokuapp.com/]
+[Note Taking App](https://note-taker-cp.herokuapp.com/)
 
 ![demo-gif](./images/Note_Taking_App.gif)
 
