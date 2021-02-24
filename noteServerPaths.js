@@ -2,12 +2,11 @@ const express = require('express')
 const path = require('path');
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
-let database = require('./db/db.json')
 
 const app = express()
-
 const PORT = process.env.PORT || 4000
 
+let database = require('./db/db.json')
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -26,9 +25,21 @@ app.post('/api/notes', (req, res) => {
 
   database.push(newNote)
   console.log(newNote)
-  
+
   fs.writeFileSync('./db/db.json', JSON.stringify(database))
   res.json(database)
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+  const id = req.params.id;
+  console.log(id)
+
+  database = database.filter(notes => notes.id != id);
+
+    fs.writeFileSync('./db/db.json', JSON.stringify(database));
+    res.json(database);
+  
+  
 })
 
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
